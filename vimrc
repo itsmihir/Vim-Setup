@@ -6,8 +6,8 @@ set expandtab
 set mouse=a
 set nu
 
+:map <F9> :!g++ % && ./a.out 
 :map <C-a> GVgg
-:map <C-n> :enew
 :map <C-o> :e . <Enter>
 :map <C-s> :w <Enter>
 :map <C-x> d
@@ -74,13 +74,26 @@ call glaive#Install()        " enable this line after the installation of glaive
 filetype plugin indent on    " required
 syntax on
 
-colorscheme elflord
+"****************************************************
+au InsertEnter * silent execute "!echo -en \<esc>[3 q"
+au InsertLeave * silent execute "!echo -en \<esc>[2 q"
+
+"1 is the blinky block cursor
+"2 is the default (non-blinky) block cursor
+"3 is blinky underscore
+"4 fixed underscore
+"5 pipe bar (blinking)
+"6 fixed pipe bar
+
+"******************************************************
+"
+colorscheme elflord   
 " custom setting
 set mouse=a
 set number
 set encoding=utf-8
 set backspace=indent,eol,start
-set cursorline
+" set cursorline
 set guioptions=
 syntax on
 
@@ -93,6 +106,7 @@ set autoindent
 " indent for special file
 autocmd FileType c,cpp setlocal expandtab shiftwidth=2 softtabstop=2 cindent 
 autocmd FileType python setlocal expandtab shiftwidth=4 softtabstop=4 autoindent
+
 
 " setup for ycm
 let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/examples/.ycm_extra_conf.py'
@@ -128,14 +142,12 @@ let g:syntastic_python_checkers = ['flake8']
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 :set relativenumber
-vnoremap <C-c> "+y
-map <C-v> "+p
+vnoremap <S-C-c> "+y
 map <silent> <F5> : NERDTreeToggle<CR>
 
 " setup for gruvbox
 set t_Co=256
 set background=dark
-colorscheme elflord
 " let g:gruvbox_contrast_dark = 'soft'
 
 " setup for ctrlp
@@ -155,6 +167,9 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standar
 nmap <F8> :TagbarToggle<CR>
 
 " setup for indent line
-let g:indentLine_char = '│'
+let g:indentLine_char = '|'
 set tags=./tags,tags;$HOME
 "source ~/cscope_maps.vim
+
+
+
